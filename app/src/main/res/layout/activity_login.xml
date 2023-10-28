@@ -6,42 +6,64 @@
     android:layout_height="match_parent"
     tools:context=".LoginActivity">
 
+    <View
+        android:id="@+id/login_Background"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:background="#FBF8F4"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="110dp"></View>
+
     <EditText
         android:id="@+id/userID_Text"
-        android:layout_width="237dp"
+        android:layout_width="250dp"
         android:layout_height="42dp"
-        android:layout_marginTop="112dp"
-        android:background="@drawable/login_edittext"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/edittext_uid_login_activity"
         android:ems="10"
         android:hint="아이디"
         android:inputType="text"
+        app:layout_constraintBottom_toTopOf="@+id/password_Text"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/signUp_Button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="160dp"
-        android:text="로그인"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/password_Text" />
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
         android:id="@+id/password_Text"
-        android:layout_width="233dp"
-        android:layout_height="45dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/login_edittext"
+        android:layout_width="250dp"
+        android:layout_height="42dp"
+        android:background="@drawable/edittext_pwd_login_activity"
         android:ems="10"
         android:hint="비밀번호"
         android:inputType="textPassword"
+        app:layout_constraintBottom_toBottomOf="@+id/login_Background"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/userID_Text" />
+        app:layout_constraintTop_toTopOf="@+id/login_Background"
+        app:layout_constraintVertical_bias="0.42" />
+
+    <android.widget.Button
+        android:id="@+id/login_Button"
+        android:layout_width="250dp"
+        android:layout_height="42dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/btn_login_activity"
+        android:text="로그인"
+        android:textColor="#ffffff"
+        app:layout_constraintEnd_toEndOf="@+id/password_Text"
+        app:layout_constraintTop_toBottomOf="@+id/password_Text" />
+
+    <CheckBox
+        android:id="@+id/autologin_checkBox"
+        android:layout_width="244dp"
+        android:layout_height="60dp"
+        android:checked="false"
+        android:text="자동로그인"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/login_Button" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

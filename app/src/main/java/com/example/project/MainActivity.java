@@ -23,21 +23,24 @@ public class MainActivity extends AppCompatActivity {
 
         final int[] before = {0};
 
+        //데이터
         Bundle bundle = new Bundle();
         Intent secondIntent = getIntent();
-        String msg = secondIntent.getStringExtra("dataFromServer");
-        Log.d("msg", msg);
-        bundle.putString("msg", msg);
+        String data = secondIntent.getStringExtra("dataFromServer");
+        bundle.putString("data", data);
 
         homeFragment = new HomeFragment();
         timeTableFragment = new TimeTableFragment();
         infoFragment = new InfoFragment();
 
         timeTableFragment.setArguments(bundle);
+        homeFragment.setArguments(bundle);
 
         getSupportFragmentManager().beginTransaction().replace(R.id.containers, homeFragment).commit();
 
         NavigationBarView navigationBarView = findViewById(R.id.bottom_navigation);
+
+        // 메인 액티비티 하단 네비게이션 바 화면 전환
         navigationBarView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -62,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 return false;
             }
-        });
-
+        }
+        );
     }
 }
