@@ -11,6 +11,7 @@ import android.os.RemoteException;
 import android.util.Log;
 import android.view.MenuItem;
 import android.os.Handler;
+import android.widget.TextView;
 
 import com.google.android.material.navigation.NavigationBarView;
 
@@ -29,6 +30,7 @@ public class MainActivity extends AppCompatActivity implements BeaconConsumer{
     private BeaconManager beaconManager;
     // 감지된 비콘들을 임시로 담을 리스트
     private List<Beacon> beaconList = new ArrayList<>();
+    TextView textView;
     HomeFragment homeFragment = new HomeFragment();
     TimeTableFragment timeTableFragment;
     InfoFragment infoFragment;
@@ -38,8 +40,8 @@ public class MainActivity extends AppCompatActivity implements BeaconConsumer{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        textView=(TextView) findViewById(R.id.textView2);
         final int[] before = {0};
-        handler.sendEmptyMessage(0);
         // 실제로 비콘을 탐지하기 위한 비콘매니저 객체를 초기화
         beaconManager = BeaconManager.getInstanceForApplication(this);
 
@@ -49,6 +51,7 @@ public class MainActivity extends AppCompatActivity implements BeaconConsumer{
 
         // 비콘 탐지를 시작한다. 실제로는 서비스를 시작하는것.
         beaconManager.bind(this);
+        handler.sendEmptyMessage(0);
 
         //데이터
         Bundle bundle = new Bundle();
@@ -112,16 +115,8 @@ public class MainActivity extends AppCompatActivity implements BeaconConsumer{
                     beaconList.clear();
                     for (Beacon beacon : beacons) {
                         beaconList.add(beacon);
-                        if(beacon.getId2().toString() == "4660"){
-                            homeFragment.attendance_check.setEnabled(true);
-                            homeFragment.attendance_check.setBackgroundColor(Color.parseColor("#f5c47e"));
-                        }
+                        textView.append("비콘 추가");
                     }
-                }
-                else
-                {
-                    homeFragment.attendance_check.setEnabled(false);
-                    homeFragment.attendance_check.setBackgroundColor(Color.GRAY);
                 }
             }
 
@@ -133,12 +128,31 @@ public class MainActivity extends AppCompatActivity implements BeaconConsumer{
     }
     Handler handler = new Handler() {
         public void handleMessage(Message msg) {
+            textView.setText("");
 
+            // 비콘이 아무것도 없으면
+            if(beaconList.isEmpty()){
+                textView.append("비콘없음");
+                homeFragment.attendance_check.setEnabled(false);
+                homeFragment.attendance_check.setBackgroundColor(Color.parseColor("#aaaaaa"));
+            }
             // 비콘의 아이디와 거리를 측정하여 textView에 넣는다.
             for (Beacon beacon : beaconList) {
-                if(beacon.getId2().toString() == "4660"){
+                int major = beacon.getId2().toInt(); //beacon major
+
+                if(major == 4660){
+                    //beacon 의 식별을 위하여 major값으로 확인
+                    //이곳에 필요한 기능 구현
+                    textView.append("버튼 활성화");
                     homeFragment.attendance_check.setEnabled(true);
                     homeFragment.attendance_check.setBackgroundColor(Color.parseColor("#f5c47e"));
+                    // 비콘이 꺼져도 계속 활성화되어서 리스트를 초기화해서 다시 비콘이 있는지없는지 탐지하게 만듦
+                    beaconList.clear();
+                }
+                else {
+                    textView.append("비콘 아이디 틀림");
+                    homeFragment.attendance_check.setEnabled(false);
+                    homeFragment.attendance_check.setBackgroundColor(Color.parseColor("#aaaaaa"));
                 }
                 //textView.setText("ID : " + beacon.getId2() + " / " + "Distance : " + Double.parseDouble(String.format("%.3f", beacon.getDistance())) + "m\n");
             }
