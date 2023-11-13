@@ -17,7 +17,7 @@
             android:layout_height="100dp"
             android:layout_gravity="center"
             android:layout_marginTop="312dp"
-            android:background="#aaaaaa"
+            android:background="@android:color/darker_gray"
             android:enabled="false"
             android:text="출석체크"
             android:textColor="#FBF4F6"
